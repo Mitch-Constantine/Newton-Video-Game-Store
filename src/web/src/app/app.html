@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand navbar-light bg-light border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/games">Game Catalogue</a>
+    <div class="navbar-nav ms-auto">
+      <a class="btn btn-primary btn-sm" routerLink="/games/new" routerLinkActive="active">New Game</a>
+    </div>
+  </div>
+</nav>
+@if (toast.messageToShow()) {
+  <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1100">
+    <div class="toast show" role="alert">
+      <div class="toast-header bg-success text-white">
+        <strong class="me-auto">Success</strong>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="toast.clear()"></button>
+      </div>
+      <div class="toast-body">{{ toast.messageToShow() }}</div>
+    </div>
+  </div>
+}
+<router-outlet />

@@ -1,0 +1,86 @@
+<div class="table-container">
+  @if (loading) {
+    <div class="table-loading-overlay">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <span class="ms-2">Loading...</span>
+    </div>
+  }
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered mb-0 games-table-fixed">
+      <colgroup>
+        @for (col of columns; track $index) {
+          <col [style.width.%]="col.width" />
+        }
+      </colgroup>
+      <thead>
+        <tr>
+          @for (col of columns; track $index) {
+            <th
+              class="sortable"
+              (click)="sortHeader(col.prop)"
+              scope="col"
+              [style.width.%]="col.width"
+            >
+              {{ col.label }}
+              @if (sortIcon(col.prop) === 'asc') {
+                <span class="sort-icon" aria-hidden="true">↑</span>
+              }
+              @if (sortIcon(col.prop) === 'desc') {
+                <span class="sort-icon" aria-hidden="true">↓</span>
+              }
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows; track row.id) {
+          <tr (click)="onRowClick(row)" class="clickable-row">
+            <td>{{ row.title }}</td>
+            <td>{{ row.barcode }}</td>
+            <td>{{ row.platform }}</td>
+            <td>{{ row.status }}</td>
+            <td>{{ row.price | number:'1.2-2' }}</td>
+            <td>{{ row.releaseDate ?? '-' }}</td>
+          </tr>
+        }
+        @if (!loading && rows.length === 0) {
+          <tr>
+            <td [attr.colspan]="columns.length" class="text-center text-muted py-4">No games found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (totalCount > 0) {
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 py-2 px-1 table-footer">
+      <div class="text-muted small">
+        Showing {{ startItem }}–{{ endItem }} of {{ totalCount }} games
+      </div>
+      <nav aria-label="Table pager" class="d-flex align-items-center gap-1">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-primary"
+          [disabled]="!canPrev"
+          (click)="prevPage()"
+          aria-label="Previous page"
+        >
+          Previous
+        </button>
+        <span class="px-2 small text-muted">
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-primary"
+          [disabled]="!canNext"
+          (click)="nextPage()"
+          aria-label="Next page"
+        >
+          Next
+        </button>
+      </nav>
+    </div>
+  }
+</div>

@@ -1,0 +1,54 @@
+<div class="container-fluid py-3">
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search (title, description, barcode)"
+        [ngModel]="searchQ()"
+        (ngModelChange)="searchQ.set($event); onSearchChange()"
+      />
+    </div>
+    <div class="col-md-2">
+      <select
+        class="form-select"
+        [ngModel]="filterPlatform()"
+        (ngModelChange)="filterPlatform.set($event); onFilterChange()"
+      >
+        <option value="">All platforms</option>
+        @for (p of platforms; track p) {
+          <option [value]="p">{{ p }}</option>
+        }
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select
+        class="form-select"
+        [ngModel]="filterStatus()"
+        (ngModelChange)="filterStatus.set($event); onFilterChange()"
+      >
+        <option value="">All statuses</option>
+        @for (s of statuses; track s) {
+          <option [value]="s">{{ s }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+  }
+
+  <app-games-grid
+    [rows]="items()"
+    [loading]="loading()"
+    [pageOffset]="pageOffset()"
+    [pageSize]="pageSize()"
+    [totalCount]="totalCount()"
+    [sortProp]="sortProp()"
+    [sortDir]="sortDir()"
+    (page)="onPage($event)"
+    (sort)="onSort($event)"
+    (edit)="goToEdit($event)"
+  />
+</div>
