@@ -53,14 +53,6 @@ if ($waited -ge $maxWait) {
 }
 Write-Host "Backend is ready." -ForegroundColor Green
 Write-Host ""
-Write-Host "  Open the app in your browser:" -ForegroundColor Yellow
-Write-Host "    http://localhost:4200" -ForegroundColor Green
-Write-Host ""
-Write-Host "  API (HTTPS): $httpsUrl" -ForegroundColor Gray
-Write-Host "  API (HTTP):  $httpUrl" -ForegroundColor Gray
-Write-Host ""
-Write-Host "========================================" -ForegroundColor Cyan
-Write-Host ""
 
 # 4. Start frontend (blocking)
 Write-Host "Starting frontend..." -ForegroundColor Cyan
